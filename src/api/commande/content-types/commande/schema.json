@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commandes",
+  "info": {
+    "singularName": "commande",
+    "pluralName": "commandes",
+    "displayName": "commande"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "commandes"
+    },
+    "produits": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::produit.produit",
+      "mappedBy": "commande"
+    },
+    "total": {
+      "type": "decimal"
+    },
+    "statut": {
+      "type": "enumeration",
+      "enum": [
+        "en attente",
+        "livré",
+        "annulé"
+      ]
+    },
+    "date_commande": {
+      "type": "date"
+    },
+    "quandite": {
+      "type": "integer"
+    }
+  }
+}

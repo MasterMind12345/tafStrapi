@@ -373,6 +373,144 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategorieCategorie extends Struct.CollectionTypeSchema {
+  collectionName: 'categories';
+  info: {
+    description: '';
+    displayName: 'categorie';
+    pluralName: 'categories';
+    singularName: 'categorie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::categorie.categorie'
+    > &
+      Schema.Attribute.Private;
+    Nom: Schema.Attribute.String;
+    produits: Schema.Attribute.Relation<'oneToMany', 'api::produit.produit'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCommandeCommande extends Struct.CollectionTypeSchema {
+  collectionName: 'commandes';
+  info: {
+    displayName: 'commande';
+    pluralName: 'commandes';
+    singularName: 'commande';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date_commande: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::commande.commande'
+    > &
+      Schema.Attribute.Private;
+    produits: Schema.Attribute.Relation<'oneToMany', 'api::produit.produit'>;
+    publishedAt: Schema.Attribute.DateTime;
+    quandite: Schema.Attribute.Integer;
+    statut: Schema.Attribute.Enumeration<
+      ['en attente', 'livr\u00E9', 'annul\u00E9']
+    >;
+    total: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiModelModel extends Struct.CollectionTypeSchema {
+  collectionName: 'models';
+  info: {
+    description: '';
+    displayName: 'model';
+    pluralName: 'models';
+    singularName: 'model';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::model.model'> &
+      Schema.Attribute.Private;
+    nom: Schema.Attribute.String;
+    produit: Schema.Attribute.Relation<'oneToOne', 'api::produit.produit'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
+  collectionName: 'produits';
+  info: {
+    displayName: 'produit';
+    pluralName: 'produits';
+    singularName: 'produit';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::categorie.categorie'
+    >;
+    commande: Schema.Attribute.Relation<'manyToOne', 'api::commande.commande'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::produit.produit'
+    > &
+      Schema.Attribute.Private;
+    model: Schema.Attribute.Relation<'oneToOne', 'api::model.model'>;
+    Nom: Schema.Attribute.String;
+    prix: Schema.Attribute.BigInteger;
+    publishedAt: Schema.Attribute.DateTime;
+    stock: Schema.Attribute.BigInteger;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -828,10 +966,10 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    commandes: Schema.Attribute.Relation<'oneToMany', 'api::commande.commande'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
@@ -853,6 +991,7 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.BigInteger;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -882,6 +1021,10 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::categorie.categorie': ApiCategorieCategorie;
+      'api::commande.commande': ApiCommandeCommande;
+      'api::model.model': ApiModelModel;
+      'api::produit.produit': ApiProduitProduit;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

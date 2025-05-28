@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "models",
+  "info": {
+    "singularName": "model",
+    "pluralName": "models",
+    "displayName": "model",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "produit": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::produit.produit",
+      "mappedBy": "model"
+    }
+  }
+}
