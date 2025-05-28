@@ -1,11 +1,20 @@
+
+
 module.exports = {
-  algolia: {
+  'algolia': {
     enabled: true,
     config: {
       applicationId: 'N23G0LDVTN',
-      adminApiKey: 'ccc8daad75a6ddf03ae54e42c0a4c15b', 
-      prefix: 'strapi',
-      debug: false,
-    },
-  },
+      apiKey: 'ccc8daad75a6ddf03ae54e42c0a4c15b', 
+      prefix: '',
+      debug: true,
+      contentTypes: {
+        'plugin::users-permissions.user': {
+          index: 'strapi-users',
+          fields: ['username', 'email']
+        }
+      }
+    }
+  }
 };
+
