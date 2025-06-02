@@ -22,6 +22,16 @@
       "relation": "oneToMany",
       "target": "api::produit.produit",
       "mappedBy": "category"
+    },
+    "imagecathegorie": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }

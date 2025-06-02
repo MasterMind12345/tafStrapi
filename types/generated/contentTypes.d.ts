@@ -389,6 +389,10 @@ export interface ApiCategorieCategorie extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
+    imagecathegorie: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -473,6 +477,7 @@ export interface ApiModelModel extends Struct.CollectionTypeSchema {
 export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
   collectionName: 'produits';
   info: {
+    description: '';
     displayName: 'produit';
     pluralName: 'produits';
     singularName: 'produit';
@@ -481,6 +486,7 @@ export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    anscienPrix: Schema.Attribute.BigInteger;
     category: Schema.Attribute.Relation<
       'manyToOne',
       'api::categorie.categorie'

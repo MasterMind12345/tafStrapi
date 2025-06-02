@@ -4,7 +4,8 @@
   "info": {
     "singularName": "produit",
     "pluralName": "produits",
-    "displayName": "produit"
+    "displayName": "produit",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -23,14 +24,15 @@
       "type": "biginteger"
     },
     "image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "category": {
       "type": "relation",
@@ -49,6 +51,9 @@
       "relation": "manyToOne",
       "target": "api::commande.commande",
       "inversedBy": "produits"
+    },
+    "anscienPrix": {
+      "type": "biginteger"
     }
   }
 }
