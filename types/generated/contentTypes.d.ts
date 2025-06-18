@@ -402,6 +402,10 @@ export interface ApiCategorieCategorie extends Struct.CollectionTypeSchema {
     Nom: Schema.Attribute.String;
     produits: Schema.Attribute.Relation<'oneToMany', 'api::produit.produit'>;
     publishedAt: Schema.Attribute.DateTime;
+    sous_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sous-categorie.sous-categorie'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -510,7 +514,45 @@ export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
     Nom: Schema.Attribute.String;
     prix: Schema.Attribute.BigInteger;
     publishedAt: Schema.Attribute.DateTime;
+    sous_categorie: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::sous-categorie.sous-categorie'
+    >;
     stock: Schema.Attribute.BigInteger;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSousCategorieSousCategorie
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'sous_categories';
+  info: {
+    displayName: 'sousCategorie';
+    pluralName: 'sous-categories';
+    singularName: 'sous-categorie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categorie: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::categorie.categorie'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sous-categorie.sous-categorie'
+    > &
+      Schema.Attribute.Private;
+    nom: Schema.Attribute.String;
+    produits: Schema.Attribute.Relation<'oneToMany', 'api::produit.produit'>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1031,6 +1073,7 @@ declare module '@strapi/strapi' {
       'api::commande.commande': ApiCommandeCommande;
       'api::model.model': ApiModelModel;
       'api::produit.produit': ApiProduitProduit;
+      'api::sous-categorie.sous-categorie': ApiSousCategorieSousCategorie;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

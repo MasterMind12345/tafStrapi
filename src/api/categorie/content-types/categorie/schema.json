@@ -32,6 +32,12 @@
       ],
       "type": "media",
       "multiple": true
+    },
+    "sous_categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::sous-categorie.sous-categorie",
+      "mappedBy": "categorie"
     }
   }
 }

@@ -54,6 +54,12 @@
     },
     "anscienPrix": {
       "type": "biginteger"
+    },
+    "sous_categorie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::sous-categorie.sous-categorie",
+      "inversedBy": "produits"
     }
   }
 }

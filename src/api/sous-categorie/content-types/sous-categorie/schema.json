@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sous_categories",
+  "info": {
+    "singularName": "sous-categorie",
+    "pluralName": "sous-categories",
+    "displayName": "sousCategorie"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "categorie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::categorie.categorie",
+      "inversedBy": "sous_categories"
+    },
+    "produits": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::produit.produit",
+      "mappedBy": "sous_categorie"
+    }
+  }
+}
